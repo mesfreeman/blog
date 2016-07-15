@@ -17,7 +17,10 @@ function getNotice(){
     Typecho_Cookie::delete('__typecho_notice_type');
     echo json_encode($rs);
 }
+
+Typecho_Cookie::setPrefix($this->options->index);
 $screen_mode = Typecho_Cookie::get('read-mode','day');
+$font_mode = Typecho_Cookie::get('font-mode', '');
 ?>
 <!DOCTYPE HTML>
 <html class="no-js">
@@ -51,7 +54,7 @@ $screen_mode = Typecho_Cookie::get('read-mode','day');
     window.siteKey = '<?php echo md5($this->options->index);?>';
     </script>
 </head>
-<body class="<?php if($screen_mode=='night'){echo 'night-mode ';}?><?php if($this->is('post') || $this->is('user')): ?>single<?php endif; ?><?php if($this->is('user')): ?> user-page<?php endif; ?>">
+<body <?php echo $font_mode; ?> class="<?php if($screen_mode=='night'){echo 'night-mode ';}?><?php if($this->is('post') || $this->is('user')): ?>single<?php endif; ?><?php if($this->is('user')): ?> user-page<?php endif; ?>">
 <!--[if lt IE 8]>
     <div class="browsehappy" role="dialog"><?php _e('当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/">升级你的浏览器</a>'); ?>.</div>
 <![endif]-->
@@ -60,11 +63,16 @@ $screen_mode = Typecho_Cookie::get('read-mode','day');
         <a class="login" href="<?php $this->options->logoutUrl(); ?>"> <i class="fa fa-sign-out"> </i> <?php _e('退出'); ?></a>
         <a class="login" href="<?php $this->options->adminUrl(); ?>"> <i class="fa fa-user"> </i> <?php $this->user->screenName(); ?></a>
     <?php else: ?>
-        <a class="login" href="<?php $this->options->registerUrl(); ?>"><i class="fa fa-user"></i> <?php _e('注册 '); ?></a>
+        <?php if($this->$options->allowRegister): ?>
+            <a class="login" href="<?php $this->options->registerUrl(); ?>"><i class="fa fa-user"></i> <?php _e('注册 '); ?></a>
+        <?php endif; ?>
 	    <a class="login" href="<?php $this->options->loginUrl(); ?>"> <i class="fa fa-sign-in"> </i> <?php _e('登录'); ?> </a>
 	<?php endif; ?>
 	<a class="set-view-mode" href="javascript:void(0)">
 	   <i class="fa <?php if($screen_mode=='day'){echo 'fa-moon-o';}else{ echo 'fa-sun-o';}?>"> </i>
+    </a>
+	<a class="set-font-mode" href="javascript:void(0)">
+	   <i class="fa fa-font"> </i>
     </a>
 </div>
 <div class="navbar-menu">

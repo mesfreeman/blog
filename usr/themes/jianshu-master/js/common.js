@@ -10,6 +10,9 @@ $(function(){
 	$('.set-view-mode').click(function(){
 		switchReadMode();
 	});
+	$('.set-font-mode').click(function(){
+		switchFontMode();
+	});
 	$(window).bind("scroll", backToTopFun);
 	
 	$('.back-to-top').click(function() {
@@ -124,8 +127,21 @@ function switchReadMode(){
     	$('body').removeClass('night-mode');
 		btn.find('i').attr('class','fa fa-moon-o');
 	}
-    setCookie('read-mode', next_mode, 86400);
+    setCookie('read-mode', next_mode, 2);
 }
+
+// 切换字体
+function switchFontMode(){
+	if ($('body').attr('style') != null) {
+		$('body').removeAttr('style');
+		setCookie('font-mode', '');
+	} else {
+		$('body').attr('style', 'font-family: kaiti;font-size: 15px;');
+		setCookie('font-mode', 'style="font-family: kaiti;font-size: 15px;"');
+	}
+	
+}
+
 function setCookie(name,value,expires){  
     expires = new Date(+new Date + 1000 * 60 * 60 * 24 * expires);
     expires = ';expires=' + expires.toGMTString();
