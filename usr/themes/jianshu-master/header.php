@@ -88,9 +88,11 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
 <div class="sidebar">
     <div class="cover-img" style="background-image: url(<?php if ($this->options->bgPhoto){$photo = explode(',',$this->options->bgPhoto);echo $photo[array_rand($photo,1)];}else{$this->options->themeUrl('img/defaultBg.jpg');}?>)"></div>
     <div class="bottom-block">
-	<?php if($this->options->avatarUrl):?>
+	  <?php if($this->options->avatarUrl):?>
 		<img class="avatar" width="72" src="<?php $this->options->avatarUrl();?>" alt="" />
-	<?php endif;?>
+      <?php else: ?>
+        <img class="avatar" width="32" src="<?php $this->options->themeUrl('img/touxiang.jpg'); ?>" alt="头像"/>
+	  <?php endif;?>
       <h1><?php $this->options->title(); ?></h1>
       <p><?php $this->options->description(); ?></p>
     </div>

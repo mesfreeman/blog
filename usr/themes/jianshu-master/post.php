@@ -3,7 +3,13 @@
 <div class="main-container">
     <article class="post preview" itemscope itemtype="http://schema.org/BlogPosting">
 		<div class="post-author clearfix">
-			<a class="fl" href="<?php $this->author->permalink(); ?>" title="<?php $this->author(); ?>"><img class="avatar" width="32" src="<?php echo gravatarUrl($this->author->mail,32); ?>" alt="" /></a>
+			<a class="fl" href="<?php $this->author->permalink(); ?>" title="<?php $this->author(); ?>">
+			<?php if($this->options->avatarUrl):?>
+    		  <img class="avatar" width="32" src="<?php $this->options->avatarUrl();?>" alt="" />
+            <?php else: ?>
+              <img class="avatar" width="32" src="<?php $this->options->themeUrl('img/touxiang.jpg'); ?>" alt="头像"/>
+    	    <?php endif;?>
+			</a>
 			<a href="<?php $this->author->permalink(); ?>"><?php $this->author(); ?></a>
 			<span title="<?php _e('最后编辑于');echo date('Y.m.d H:i:s',$this->modified); ?>"><?php $this->date('Y.m.d H:i:s'); ?></span>
 		</div>
@@ -21,19 +27,15 @@
 			<span class="post-share"><a class="btn s3 btn-dialog" data-dialog="#dialog-share" href="#"><i class="fa fa-share-alt"></i> <?php _e('分享'); ?></a></span>
 			<span class="post-donate">
 				<a href="#" class="btn s3 btn-dialog" data-dialog="#dialog-donate"><?php _e('赏'); ?></a>
-				
 			</span>
-			<div class="dialog" id="dialog-donate" >
-				<h4><?php _e('您可以选择一种方式赞助本站'); ?></h4>
-				<form id="alipay-form" action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK">
-					<input type="hidden" name="optEmail" value="<?php $this->options->alipayAccount();?>">
-					<input type="hidden" name="payAmount" value="<?php $this->options->alipayAmount();?>">
-					<input type="hidden" name="title" value="<?php _e('赞助');$this->options->title();?>">
-					<input type="hidden" name="memo" value="<?php _e('《');$this->title();_e('》写的很好，打赏一个!');?>">
-					<input title="点击此按钮赞助本站" name="pay" src="<?php $this->options->themeUrl('img/alipay_btn.png')?>" type="image" value="赞助本站">
-				</form>
-				<p><?php _e('支付宝扫码赞助'); ?></p>
-				<img src="<?php $this->options->themeUrl('img/alipay.png')?>" alt="支付宝扫码赞助" width="200" />
+			<div class="dialog" id="dialog-donate">
+			    <?php if(!ismobile()):?>
+			      <h4><?php _e('支付宝扫码赞助本站'); ?></h4>
+			      <img src="<?php $this->options->themeUrl('img/alipay.png')?>" alt="支付宝扫码赞助" width="200" />
+			    <?php else: ?>
+			      <h4><?php _e('长按识别二维码赞助本站'); ?></h4>
+			      <img src="<?php $this->options->themeUrl('img/wechat.png')?>" alt="支付宝扫码赞助" width="200" />
+			    <?php endif;?>
 			</div>
 			<div class="dialog" id="dialog-share">
 				<div class="bdsharebuttonbox" data-tag="share_1">
@@ -58,12 +60,12 @@
 				</script>
 			</div>
 		</div>
-        
+
 		<div class="post-foot clearfix">
 			<div class="post-tags"><?php _e('标签: '); ?><?php $this->tags(', ', true, 'none'); ?></div>
 		</div>
     </article>
-    
+
     <ul class="post-near">
         <li>上一篇: <?php $this->thePrev('%s','没有了'); ?></li>
         <li>下一篇: <?php $this->theNext('%s','没有了'); ?></li>

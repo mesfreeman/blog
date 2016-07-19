@@ -52,7 +52,7 @@ $(function(){
 			$('.dialog').removeAttr('style');
 		});
 		var w = $(d).width(),h = $(d).height();
-		$(d).css('margin-top',-h/2).css('margin-left',-w/2).show();
+		$(d).css('margin-top',-h/2).css('margin-left',-w/2).css('text-align','center').show();
 		return false;
 	});
 	backToTopFun();

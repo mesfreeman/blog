@@ -102,9 +102,12 @@ pre code {
 	color:#444;
 }
 blockquote {
-	margin:1em 1.5em;
-	padding-left:1.5em;
-	border-left:4px solid #f2f2f2;
+	margin: 1em 0em;
+    padding: 1px 15px;
+    border-left: 8px solid #E7ECEE;
+    background-color: rgba(75, 127, 177, 0.05);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 body {
 	margin: 0;
@@ -112,7 +115,7 @@ body {
 	font-size:14px;
 	line-height: 20px;
 	color: #555;
-	background-color: white
+	background-color: #FFFCF5;
 }
 a {
 	color: #10A64F;
@@ -275,6 +278,11 @@ body {
 	left: 45px;
 	width: 25.0%;
 }
+.sidebar .bottom-block {
+	font-family: kaiti;
+	font-size: 15px;
+}
+
 .main{
 	margin-left: 25.0%;
 	width: 58.33333%;
@@ -378,6 +386,13 @@ body {
 	padding: 0 2px;
 	margin-right: 8px
 }
+
+/* 字体样式特殊处理  */
+.navbar-user, .navbar-menu .dropdown-toggle b{
+	font-size: 14px;
+	font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
 .navbar-user a{
 	color:#555;
 }
@@ -415,8 +430,10 @@ body {
 
 .navbar-user .set-view-mode, .navbar-user .set-font-mode {
 	position: relative;
-	top: 7px;
-	margin-right: 15px;
+    top: 7px;
+    float: right;
+    padding: 0 2px;
+    margin-right: 8px;
 }
 
 .dropdown-menu {
@@ -515,7 +532,7 @@ body {
 		top: 3px
 	}
 
-	.navbar-user .login,.wrap-btn .login {
+	.navbar-user .login,.wrap-btn .login,.navbar-user .set-view-mode, .navbar-user .set-font-mode {
 		top: 13px
 	}
 	.navbar-menu{
@@ -608,7 +625,7 @@ body {
 }
 .sidebar .bottom-block {
 	position: absolute;
-	bottom: 0;
+	bottom: 10px;
 	width:100%;
 	padding: 30px 0;
 	color: white;
@@ -726,6 +743,7 @@ body {
 .page-title .search {
 	float: right;
 	margin-top: 10px;
+	margin-right: 8px;
 	min-width:200px
 }
 
@@ -842,8 +860,7 @@ body {
 	bottom:-4px;
 }
 .post-content hr,.comment-content hr {
-	margin:2em auto;
-	border:1px dashed #E9E9E9;
+	border:1px dashed #B1AEAE;
 	border-width:2px 0 0 0;
 }
 .post .tags {
@@ -861,11 +878,12 @@ body {
 }
 
 .post-thumb{
-	margin:0 0 0 10px;
-	float:right;
-	width:100px;
-	height:80px;
-	overflow:hidden;
+    margin: 36px 0 0 10px;
+    float: right;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+	border-radius: 20%;
 }
 
 .post-thumb .thumb{
@@ -889,6 +907,7 @@ body {
 }
 .post-author .fl{
 	margin-right:15px;
+	margin-top: -7px;
 }
 
 .post-tool{
@@ -899,7 +918,7 @@ body {
 }
 .post-tool span a{
 	display:inline-block;
-	width:115px;
+	width:114px;
 	text-align:center;
 	padding:0;
 	line-height:36px;
@@ -1274,7 +1293,7 @@ footer a {
 }
 .dialog{
 	position:fixed;
-	top:50%;left:50%;
+	top:50%;left: 46%;;
 	padding:10px;
 	background-color:#fff;
 	display:none;
@@ -1312,11 +1331,13 @@ footer a {
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	-webkit-transition: all 0.49s;
-	-moz-transition: all 0.49s;
-	-ms-transition: all 0.49s;
-	-o-transition: all 0.49s;
-	transition: all 0.49s;
+    padding: 5px;
+    border: 1px solid #ccc;
+	-webkit-transition: all 0.9s;
+	-moz-transition: all 0.9s;
+	-ms-transition: all 0.9s;
+	-o-transition: all 0.9s;
+	transition: all 0.9s;
 }
 .avatar:hover{
 	transform:rotateZ(360deg); 
@@ -1367,8 +1388,7 @@ footer a {
 }
 
 /* highlight */
-.post-content pre { background: #23241f; }
-.post-content pre code {background: none; }
+.post-content pre { background: #F5F5F5; }
 .hljs {
   display: block;
   overflow-x: auto;
@@ -1542,6 +1562,11 @@ body.night-mode a{
 body.night-mode a:hover{
 	color: #fff;
 }
+
+body.night-mode #qrcode-img p{
+	color:#000;
+} 
+
 body.night-mode .post-content a {
   color: #10A64F;
 }
