@@ -878,12 +878,11 @@ body {
 }
 
 .post-thumb{
-    margin: 36px 0 0 10px;
+    margin: 14px 0 0 10px;
     float: right;
     width: 100px;
     height: 100px;
     overflow: hidden;
-	border-radius: 20%;
 }
 
 .post-thumb .thumb{
