@@ -30,6 +30,8 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta property="qc:admins" content="31010062301160516375" />
+    <!-- 加入百度验证代码 -->
+    <meta name="baidu-site-verification" content="Hv1ne9PHy8" />
     <title><?php $this->archiveTitle(array(
             'category'  =>  _t('分类 %s 下的文章'),
             'search'    =>  _t('包含关键字 %s 的文章'),
