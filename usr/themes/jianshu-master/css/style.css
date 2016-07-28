@@ -94,7 +94,7 @@ code {
 	color:#B94A48;
 }
 pre {
-	padding:10px;
+	/*padding:10px;*/
 	overflow:auto;
 }
 pre code {
@@ -520,7 +520,7 @@ body {
 }
 
 @media (max-width: 768px) {
-	
+
 	.navbar-user {
 		top: 0;
 		left: 0;
@@ -542,7 +542,7 @@ body {
 		background-color: #e78170;
 		text-shadow: 0 1px 0 #b9351f;
 	}
-	
+
 	.navbar-menu .dropdown{
 		display: none;
 		position: fixed;
@@ -913,7 +913,7 @@ body {
 	position:relative;
 	width:240px;
 	margin:20px auto;
-	
+
 }
 .post-tool span a{
 	display:inline-block;
@@ -935,7 +935,7 @@ body {
 	height:42px;
 	line-height:42px;
 	border:5px solid #fff;
-	
+
 }
 
 .post-donate,.post-donate .btn{
@@ -1339,7 +1339,7 @@ footer a {
 	transition: all 0.9s;
 }
 .avatar:hover{
-	transform:rotateZ(360deg); 
+	transform:rotateZ(360deg);
 }
 .fa-homepage:before{
 	content: "\f015";
@@ -1564,7 +1564,7 @@ body.night-mode a:hover{
 
 body.night-mode #qrcode-img p{
 	color:#000;
-} 
+}
 
 body.night-mode .post-content a {
   color: #10A64F;
@@ -1601,6 +1601,9 @@ body.night-mode .page-title .active a, body.night-mode .page-title .active a:hov
 body.night-mode .page-title>ul a:hover {
 	background-color: #333;
 	color: #eee
+}
+body.night-mode .post-content code {
+	background: #2A2A2A;
 }
 .night-mode .footer-inner,.night-mode blockquote,.night-mode input,.night-mode .page-title,.night-mode .main-container .post{
 	border-color: #2F2F2F;
