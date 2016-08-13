@@ -1557,22 +1557,21 @@ body.night-mode {
 body.night-mode a{
 	color: #B1B1B1;
 }
-
 body.night-mode a:hover{
 	color: #fff;
 }
-
 body.night-mode #qrcode-img p{
 	color:#000;
 }
-
 body.night-mode .post-content a {
   color: #10A64F;
+}
+body.night-mode .tag-list a:hover,a:active {
+	color: #fff;
 }
 .night-mode .navbar-user,.night-mode .page-title{
 	background-color: #3F3F3F;
 }
-
 .night-mode .navbar-menu.shrink a {
 	background-color:#222222;
 	text-shadow:0 1px 0 black;

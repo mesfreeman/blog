@@ -4,23 +4,23 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 function themeConfig($form) {
     $logoText = new Typecho_Widget_Helper_Form_Element_Text('logoText', NULL, NULL, _t('网站文字LOGO'), _t('网站文字LOGO，单个文字;为空时取网站标题第一个文字'));
     $form->addInput($logoText);
-    
+
 	$avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, NULL, _t('博主头像'), _t('博主头像地址，为空则不显示'));
     $form->addInput($avatarUrl);
-	
+
     $icpNum = new Typecho_Widget_Helper_Form_Element_Text('icpNum', NULL, NULL, _t('网站备案号'), _t('在这里填入网站备案号'));
     $form->addInput($icpNum);
-    
+
     $siteStat = new Typecho_Widget_Helper_Form_Element_Textarea('siteStat', NULL, NULL, _t('统计代码'), _t('在这里填入网站统计代码'));
     $form->addInput($siteStat);
-    
+
     $bgPhoto = new Typecho_Widget_Helper_Form_Element_Text('bgPhoto', NULL, NULL, _t('网站背景图'), _t('在这里填入背景图网址'));
     $form->addInput($bgPhoto);
-    
+
 	// 头像地址
 	$avatarDomain = new Typecho_Widget_Helper_Form_Element_Text('avatarDomain', NULL, 'http://cn.gravatar.com', _t('头像地址'),_t('替换Typecho使用的Gravatar头像服务器（ www.gravatar.com ）'));
 	$form->addInput($avatarDomain);
-	
+
 	$alipayAccount = new Typecho_Widget_Helper_Form_Element_Text('alipayAccount', NULL, NULL, _t('打赏支付宝帐号'), _t('在这里填入支付宝帐号'));
     $form->addInput($alipayAccount);
 	$alipayAmount = new Typecho_Widget_Helper_Form_Element_Text('alipayAmount', NULL, NULL, _t('默认打赏金额'), _t('在这里填入打赏金额'));
@@ -31,8 +31,8 @@ function themeConfig($form) {
     //替换后地址
     $cdn_address = new Typecho_Widget_Helper_Form_Element_Text('cdn_add', NULL, NULL, _t('替换后'), _t('即你的七牛云存储域名，如http://yourblog.qiniudn.com/'));
     $form->addInput($cdn_address);
-    
-	
+
+
     //默认缩略图
     $default = new Typecho_Widget_Helper_Form_Element_Text('default_thumb', NULL, '', _t('默认缩略图'),_t('文章没有图片时显示的默认缩略图，为空时表示不显示'));
     $form->addInput($default);
@@ -42,17 +42,17 @@ function themeConfig($form) {
     //默认高度
     $height = new Typecho_Widget_Helper_Form_Element_Text('thumb_height', NULL, '140', _t('缩略图默认高度'));
     $form->addInput($height);
-    
+
 	$iconCss = new Typecho_Widget_Helper_Form_Element_Textarea('iconCss', NULL, NULL, _t('图标样式'), _t('在这里填入图标样式代码'));
     $form->addInput($iconCss);
-	
+
     $listStyle = new Typecho_Widget_Helper_Form_Element_Checkbox('listStyle',
         array('excerpt' => _t('显示摘要'),
             'thumb' => _t('显示缩略图')),
         array('excerpt', 'thumb'), _t('列表显示'));
-    
+
     $form->addInput($listStyle);
-    
+
 }
 /**
  * 获取gravatar头像地址
@@ -90,7 +90,7 @@ function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"
         if($size!='full'){
             $thumb_width = $options->thumb_width;
             $thumb_height = $options->thumb_height;
-    
+
             if($size!=null){
                 $size = explode('x', $size);
                 if(!empty($size[0]) && !empty($size[1])){
@@ -247,7 +247,7 @@ function threadedComments($comments, $options){
     $comments->alt(' comment-odd', ' comment-even');
     echo $commentClass;
 ?>">
-    
+
     <div class="comment-meta">
         <div class="comment-meta-author" itemprop="creator" itemscope itemtype="http://schema.org/Person">
             <span itemprop="image">
@@ -272,7 +272,7 @@ function threadedComments($comments, $options){
     <div class="comment-content" itemprop="commentText">
     <?php $comments->content(); ?>
     </div>
-    
+
     <?php if ($comments->children) { ?>
     <div class="comment-children" itemprop="discusses">
         <?php $comments->threadedComments(); ?>
