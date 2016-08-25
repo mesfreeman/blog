@@ -56,7 +56,7 @@ $db = new Typecho_Db('Mysql', 'iblog_');
 $db->addServer(array (
   'host' => 'localhost',
   'user' => 'iblog',
-  'password' => 'iblog123',
+  'password' => 'Iblog.147',
   'charset' => 'utf8',
   'port' => '3306',
   'database' => 'iblog',
