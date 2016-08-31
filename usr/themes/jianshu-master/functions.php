@@ -114,6 +114,17 @@ function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"
 	    array($obj->title,$thumb,$obj->permalink),
 	    $pattern);
 }
+
+/**
+ * 首页文章显示条数
+ * @param array $archive
+ */
+function themeInit($archive) {
+    if ($archive->is('index')) {
+        $archive->parameter->pageSize = 6; // 自定义条数
+    }
+}
+
 /**
  * 解析内容以实现附件加速
  * @access public
