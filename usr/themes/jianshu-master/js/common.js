@@ -22,7 +22,7 @@ $(function(){
 	
 	$('.dropdown-toggle').click(function(){
 		var target = $(this).data('target');
-		if($(this).hasClass('logo') && $(window).width()>=480){
+		if($(this).hasClass('logo') && $(window).width()>=768){
 			return true;
 		}
 		//console.log();
