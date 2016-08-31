@@ -1,7 +1,7 @@
 <?php
 /**
  * 仿简书主题
- * 
+ *
  * @package JianShu
  * @author 自由人
  * @version 1.1.0
@@ -22,7 +22,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 		<ul class="post-meta">
 		    <li><?php $this->category(','); ?></li>
 		    <li><?php $this->dateWord(); ?></li>
-			<li><?php _e('阅读');$this->viewsNum(); ?></li>
+			<li><?php _e('阅读');Views_Plugin::theViews('',''); ?></li>
 			<li><?php _e('喜欢');$this->likesNum(); ?></li>
 			<li><a href="<?php $this->permalink() ?>#<?php $this->respondId(); ?>"><?php $this->commentsNum('评论%d'); ?></a></li>
 		</ul>
