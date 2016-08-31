@@ -986,7 +986,7 @@ li.comment-body:hover > .comment-meta > .comment-meta-reply{
 }
 .comment-meta{
 	overflow:hidden;
-	height:32px;
+	height:45px;
 	line-height:32px;
 	margin-bottom:5px;
 }
