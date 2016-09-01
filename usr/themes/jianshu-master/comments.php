@@ -6,11 +6,11 @@
 	   <?php $this->commentsNum(_t('暂无评论'), _t('仅有一条评论'), _t('已有 %d 条评论')); ?>
 	   <a class="pull-right" href="#<?php $this->respondId(); ?>"><i class="fa fa-pencil"></i> 添加新评论</a>
 	</p>
-    
+
     <?php $comments->listComments(); ?>
 
     <?php $comments->pageNav('&laquo; 前一页', '后一页 &raquo;'); ?>
-    
+
     <?php endif; ?>
 
     <?php if($this->allow('comment')): ?>
@@ -18,18 +18,18 @@
         <div class="cancel-comment-reply">
         <?php $comments->cancelReply(); ?>
         </div>
-    
+
     	<h3 id="response"><?php _e('发表评论'); ?></h3>
     	<form method="post" action="<?php $this->commentUrl() ?>" id="comment-form" role="form">
     		<div>
                 <label for="textarea" class="required hide"><?php _e('内容'); ?></label>
-                <textarea rows="4" cols="50" name="text" id="textarea" class="textarea" required ><?php $this->remember('text'); ?></textarea>
+                <textarea placeholder="支持MarkDown语法" rows="4" cols="50" name="text" id="textarea" class="textarea" required ><?php $this->remember('text'); ?></textarea>
             </div>
 			<div class="comments-fields">
 				<?php if($this->user->hasLogin()): ?>
 				<p><?php $this->user->screenName(); ?>. <a href="<?php $this->options->logoutUrl(); ?>" title="Logout"><?php _e('退出'); ?> &raquo;</a></p>
 				<?php else: ?>
-				
+
 				<p class="field">
 					<label for="author" class="required"><?php _e('称呼'); ?></label>
 					<input type="text" name="author" id="author" class="text" value="<?php $this->remember('author'); ?>" required />
