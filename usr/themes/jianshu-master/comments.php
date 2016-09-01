@@ -23,7 +23,7 @@
     	<form method="post" action="<?php $this->commentUrl() ?>" id="comment-form" role="form">
     		<div>
                 <label for="textarea" class="required hide"><?php _e('内容'); ?></label>
-                <textarea placeholder="支持MarkDown语法" rows="4" cols="50" name="text" id="textarea" class="textarea" required ><?php $this->remember('text'); ?></textarea>
+                <textarea placeholder="<?php if($this->options->commentsMarkdown) {echo "支持MarkDown语法";}?>" rows="4" cols="50" name="text" id="textarea" class="textarea" required ><?php $this->remember('text'); ?></textarea>
             </div>
 			<div class="comments-fields">
 				<?php if($this->user->hasLogin()): ?>
