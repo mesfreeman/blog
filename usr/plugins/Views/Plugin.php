@@ -1,6 +1,6 @@
 <?php
 /**
- * Typecho 版 Views - 统计阅读次数、点赞数、输出最受欢迎的文章
+ * Typecho 版 Views - 统计访问次数、点赞数
  *
  * @package Views
  * @author  Double
@@ -19,6 +19,8 @@ class Views_Plugin implements Typecho_Plugin_Interface
     public static function activate()
     {
         Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('Views_Plugin', 'viewsCounter');
+        Typecho_Plugin::factory('Widget_Archive')->footer = array('Views_Plugin', 'loadLikeJs');
+        Helper::addAction('views', 'Views_Action');
 
         $db = Typecho_Db::get();
         $prefix = $db->getPrefix();
@@ -40,7 +42,9 @@ class Views_Plugin implements Typecho_Plugin_Interface
      * @return void
      * @throws Typecho_Plugin_Exception
      */
-    public static function deactivate(){}
+    public static function deactivate(){
+        Helper::removeAction('views');
+    }
 
     /**
      * 获取插件配置面板
@@ -103,46 +107,41 @@ class Views_Plugin implements Typecho_Plugin_Interface
             return $row['views'];
     }
 
-    public static function likesNumCounter()
+    /**
+     * 加入 footer
+     *
+     * @access public
+     * @return void
+     */
+    public static function loadLikeJs()
     {
-        // 点赞计数
-
+        require_once 'likes-js.php';
     }
 
     /**
-     * 输出最受欢迎文章
+     * 输出点赞次数
      *
-     * 语法: Views_Plugin::theMostViewed();
+     * 语法: Views_Plugin::theLikes();
+     * 输出: '赞:xxx次'
+     *
+     * 语法: Views_Plugin::theLikes('赞:(', ')次');
+     * 输出: '赞:(xxx)次'
      *
      * @access public
-     * @param int     $limit  文章数目
      * @param string  $before 前字串
      * @param string  $after  后字串
+     * @param bool    $echo   是否显示 (0 用于运算，不显示)
      * @return string
      */
-    public static function theMostViewed($limit = 10, $before = '<br/> - ( 访问: ', $after = ' 次 ) ')
+    public static function theLikes($before = '赞:', $after = '次', $echo = 1)
     {
         $db = Typecho_Db::get();
-        $options = Typecho_Widget::widget('Widget_Options');
-        $limit = is_numeric($limit) ? $limit : 10;
-        $posts = $db->fetchAll($db->select()->from('table.contents')
-                 ->where('type = ? AND status = ? AND password IS NULL', 'post', 'publish')
-                 ->order('views', Typecho_Db::SORT_DESC)
-                 ->limit($limit)
-                 );
-
-        if ($posts) {
-            foreach ($posts as $post) {
-                $result = Typecho_Widget::widget('Widget_Abstract_Contents')->push($post);
-                $post_views = number_format($result['views']);
-                $post_title = htmlspecialchars($result['title']);
-                $permalink = $result['permalink'];
-                echo "<li><a href='$permalink' title='$post_title'>$post_title</a><span style='font-size:70%'>$before $post_views $after</span></li>\n";
-            }
-
-        } else {
-            echo "<li>N/A</li>\n";
-        }
+        $cid = Typecho_Widget::widget('Widget_Archive')->cid;
+        $row = $db->fetchRow($db->select('likesNum')->from('table.contents')->where('cid = ?', $cid));
+        if ($echo)
+            echo $before, number_format($row['likesNum']), $after;
+        else
+            return $row['likesNum'];
     }
 
 }

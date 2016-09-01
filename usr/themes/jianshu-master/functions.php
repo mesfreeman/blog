@@ -116,16 +116,6 @@ function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"
 }
 
 /**
- * 首页文章显示条数
- * @param array $archive
- */
-function themeInit($archive) {
-    if ($archive->is('index')) {
-        $archive->parameter->pageSize = 6; // 自定义条数
-    }
-}
-
-/**
  * 解析内容以实现附件加速
  * @access public
  * @param string $content 文章正文
@@ -138,6 +128,7 @@ function parseContent($obj){
     }
     echo trim($obj->content);
 }
+
 /**
  * 实现静态资源的加速
  * @param string $params
@@ -151,31 +142,6 @@ function themeCdnUrl($params=null){
     }
 }
 
-/**
- * 格式化时间
- * @param int $time 时间戳
- * @param string $str 显示格式
- * @return string
- */
-function formatTime($time,$str='Y-m-d'){
-    isset($str)?$str:$str='m-d';
-    $way = time() - $time;
-    $r = '';
-    if($way < 60){
-        $r = '刚刚';
-    }elseif($way >= 60 && $way <3600){
-        $r = floor($way/60).'分钟前';
-    }elseif($way >=3600 && $way <86400){
-        $r = floor($way/3600).'小时前';
-    }elseif($way >=86400 && $way <2592000){
-        $r = floor($way/86400).'天前';
-    }elseif($way >=2592000 && $way <15552000){
-        $r = floor($way/2592000).'个月前';
-    }else{
-        $r = date("$str",$time);
-    }
-    return $r;
-}
 /**
  * 生成随机颜色值
  * @return string

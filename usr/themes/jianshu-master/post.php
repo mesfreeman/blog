@@ -11,7 +11,7 @@
     	    <?php endif;?>
 			</a>
 			<a href="<?php $this->author->permalink(); ?>"><?php $this->author(); ?></a>
-			<span title="<?php _e('最后编辑于');echo date('Y.m.d H:i:s',$this->modified); ?>"><?php $this->date('Y.m.d H:i:s'); ?></span>
+			<span title="<?php _e('最后编辑于');echo date('Y-m-d H:i:s',$this->modified); ?>"><?php $this->date('Y-m-d H:i:s'); ?></span>
 		</div>
         <h1 class="post-title" itemprop="name headline"><?php $this->title() ?></h1>
         <ul class="post-meta clearfix">
@@ -23,7 +23,7 @@
             <?php parseContent($this); ?>
         </div>
 		<div class="post-tool">
-			<span class="post-like"><a class="btn s3 btn-like" data-cid="<?php $this->cid();?>" data-num="<?php $this->likesNum();?>" href="#"><i class="fa fa-thumbs-up"></i> <?php _e('赞'); ?> <span class="post-likes-num"><?php $this->likesNum();?></span></a></span>
+			<span class="post-like"><a class="btn s3 btn-like" data-cid="<?php $this->cid();?>" data-num="<?php $this->likesNum();?>" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i> <span id="zanId"><?php _e('赞'); ?></span> <span class="post-likes-num"><?php Views_Plugin::theLikes('','');?></span></a></span>
 			<span class="post-share"><a class="btn s3 btn-dialog" data-dialog="#dialog-share" href="#"><i class="fa fa-share-alt"></i> <?php _e('分享'); ?></a></span>
 			<span class="post-donate">
 				<a href="#" class="btn s3 btn-dialog" data-dialog="#dialog-donate"><?php _e('赏'); ?></a>
