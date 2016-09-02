@@ -42,7 +42,8 @@ class Views_Plugin implements Typecho_Plugin_Interface
      * @return void
      * @throws Typecho_Plugin_Exception
      */
-    public static function deactivate(){
+    public static function deactivate()
+    {
         Helper::removeAction('views');
     }
 
