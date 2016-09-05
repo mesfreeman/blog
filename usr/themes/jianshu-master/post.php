@@ -15,9 +15,9 @@
 		</div>
         <h1 class="post-title" itemprop="name headline"><?php $this->title() ?></h1>
         <ul class="post-meta clearfix">
-            <li><?php _e('阅读');Views_Plugin::theViews('',''); ?></li>
-            <li><?php $this->commentsNum('评论%d'); ?></li>
-			<li><?php _e('喜欢');$this->likesNum(); ?></li>
+            <li><?php _e('阅读');Views_Plugin::theViews(':(',')'); ?></li>
+            <li><?php $this->commentsNum('评论:(%d)'); ?></li>
+			<li><?php _e('赞');Views_Plugin::theLikes(':(',')'); ?></li>
         </ul>
         <div class="post-content" itemprop="articleBody">
             <?php parseContent($this); ?>
