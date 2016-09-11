@@ -85,9 +85,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="password"],
 }
 
 pre,code {
-	background:#F3F3F0;
-	font-family:"Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
-	font-size:.92857em;
+    background: #F3F3F0;
+    font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
+    font-size: 0.97em;
 }
 code {
 	padding:2px 4px;
@@ -847,7 +847,7 @@ body {
 	overflow:hidden;
 }
 .preview .post-content,.preview .post-content p{
-	line-height:2em;
+	line-height:1.5em;
 }
 .post-content a{
 	color:#10A64F;
