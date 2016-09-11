@@ -85,7 +85,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="password"],
 }
 
 pre,code {
-    background: #F3F3F0;
+    /* background: #F3F3F0; */
     font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
     font-size: 0.97em;
 }
