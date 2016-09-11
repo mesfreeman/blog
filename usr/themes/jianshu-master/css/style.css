@@ -84,7 +84,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="password"],
 	outline: 0
 }
 
-pre,code {
+code {
     background: #F3F3F0;
     font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
     font-size: 0.97em;
