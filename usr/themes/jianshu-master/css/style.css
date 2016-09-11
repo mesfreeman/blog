@@ -83,23 +83,20 @@ input[type="text"],input[type="email"],input[type="url"],input[type="password"],
 	box-sizing: border-box;
 	outline: 0
 }
-
-code {
-    background: #F3F3F0;
-    font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
-    font-size: 0.97em;
-}
-code {
-	padding:2px 4px;
-	color:#C13;
-}
 pre {
-	/*padding:10px;*/
+	background: #23241f;
 	overflow:auto;
 }
 pre code {
 	padding:3px;
 	color:#444;
+}
+code {
+    background: #F3F3F0;
+    font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
+    font-size: 0.97em;
+	padding:2px 4px;
+	color:#C13;
 }
 blockquote {
 	margin: 1em 0em;
