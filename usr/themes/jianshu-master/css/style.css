@@ -1523,18 +1523,6 @@ footer a {
   color: #CAC5B0;
 }
 
-.coffeescript .javascript,
-.javascript .xml,
-.tex .hljs-formula,
-.xml .javascript,
-.xml .vbscript,
-.xml .css,
-.xml .hljs-cdata,
-.xml .php,
-.php .xml {
-  opacity: 0.5;
-}
-
 /* single page*/
 .single .sidebar{
 	display:none;
