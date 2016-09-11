@@ -85,13 +85,13 @@ input[type="text"],input[type="email"],input[type="url"],input[type="password"],
 }
 
 pre,code {
-    /* background: #F3F3F0; */
+    background: #F3F3F0;
     font-family: Menlo,Monaco,Consolas,"Lucida Console","Courier New",monospace !important;
     font-size: 0.97em;
 }
 code {
 	padding:2px 4px;
-	color:#B94A48;
+	color:#C13;
 }
 pre {
 	/*padding:10px;*/
@@ -1385,7 +1385,6 @@ footer a {
 }
 
 /* highlight */
-.post-content pre { background: #F5F5F5; }
 .hljs {
   display: block;
   overflow-x: auto;
