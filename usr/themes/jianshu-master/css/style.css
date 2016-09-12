@@ -631,7 +631,6 @@ body {
 	color: white;
 	text-align:center;
 }
-
 .sidebar .bottom-block h1,.sidebar .bottom-block h2,.sidebar .bottom-block h3,.sidebar .bottom-block h4 {
 	text-shadow: -1px 0 0 rgba(0,0,0,0.75)
 }
@@ -812,7 +811,7 @@ body {
 	color:#000;
 }
 .preview .post-title{
-	font-size: 32px;
+	font-size: 28px;
 }
 .post-meta{
 	font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
@@ -836,7 +835,9 @@ body {
 	margin-right:5px;
 }
 .post-content h2,.comment-content h2 {
-	font-size:1.28571em;
+	font-size:23px;
+	border-bottom: 1px solid #ccc;
+    line-height: 2em;
 }
 .post-content img,.comment-content img,.post-content video,.comment-content video {
 	max-width:100%;
@@ -844,6 +845,9 @@ body {
 .post-content{
 	line-height:1.5em;
 	overflow:hidden;
+}
+.post-content ol, .post-content ul {
+	padding-left: 30px;
 }
 .preview .post-content,.preview .post-content p{
 	line-height:1.5em;
