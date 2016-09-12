@@ -1,7 +1,8 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-function themeConfig($form) {
+function themeConfig($form)
+{
     $logoText = new Typecho_Widget_Helper_Form_Element_Text('logoText', NULL, NULL, _t('网站文字LOGO'), _t('网站文字LOGO，单个文字;为空时取网站标题第一个文字'));
     $form->addInput($logoText);
 
@@ -63,7 +64,8 @@ function themeConfig($form) {
  * @param string $default
  * @return string
  */
-function gravatarUrl($mail, $size=32, $rating=null, $default=null){
+function gravatarUrl($mail, $size=32, $rating=null, $default=null)
+{
 	$url = Typecho_Widget::widget('Widget_Options')->avatarDomain;
 	$url .= '/avatar/';
 
@@ -77,7 +79,8 @@ function gravatarUrl($mail, $size=32, $rating=null, $default=null){
 
 	return $url;
 }
-function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"><a class="thumb" href="{permalink}" title="{title}" style="background-image:url({thumb})"></a></div>'){
+function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"><a class="thumb" href="{permalink}" title="{title}" style="background-image:url({thumb})"></a></div>')
+{
 
     preg_match_all( "/<[img|IMG].*?src=[\'|\"](.*?)[\'|\"].*?[\/]?>/", $obj->content, $matches );
     $thumb = '';
@@ -121,7 +124,8 @@ function showThumb($obj,$size=null,$link=false,$pattern='<div class="post-thumb"
  * @param string $content 文章正文
  * @param Widget_Abstract_Contents $obj
  */
-function parseContent($obj){
+function parseContent($obj)
+{
     $options = Typecho_Widget::widget('Widget_Options');
     if(!empty($options->src_add) && !empty($options->cdn_add)){
         $obj->content = str_ireplace($options->src_add,$options->cdn_add,$obj->content);
@@ -133,7 +137,8 @@ function parseContent($obj){
  * 实现静态资源的加速
  * @param string $params
  */
-function themeCdnUrl($params=null){
+function themeCdnUrl($params=null)
+{
     $options = Typecho_Widget::widget('Widget_Options');
     if(!empty($options->src_add) && !empty($options->cdn_add)){
         echo $options->cdn_add.$params;
@@ -143,10 +148,26 @@ function themeCdnUrl($params=null){
 }
 
 /**
+ * 重写获取样式地址
+ * @param string $path
+ */
+function getCssUrl($path = null)
+{
+    $options = Typecho_Widget::widget('Widget_Options');
+
+    if ($path === null) {
+        $path = 'css/style.css';
+    }
+
+    echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
+}
+
+/**
  * 生成随机颜色值
  * @return string
  */
-function randColor(){
+function randColor()
+{
     return rand(120,200).','.rand(120,200).','.rand(120,200);
 }
 /**
@@ -157,7 +178,8 @@ function randColor(){
  * @param number $desc 默认为0,表示倒序
  * @return void
  */
-function showTagCloud($parse=null,$limit=30,$sort='mid',$desc=0){
+function showTagCloud($parse=null,$limit=30,$sort='mid',$desc=0)
+{
     $parse = is_null($parse) ? '<li><a href="{permalink}" title="{count}个话题" style="{background}">{name}({count})</a></li>': $parse;
     Typecho_Widget::widget('Widget_Metas_Tag_Cloud', 'sort='.$sort.'&ignoreZeroCount=1&desc='.$desc.'&limit='.$limit)->to($tags);
     $output = '';
@@ -173,7 +195,8 @@ function showTagCloud($parse=null,$limit=30,$sort='mid',$desc=0){
     }
     echo $output;
 }
-function ismobile() {
+function ismobile()
+{
     if (isset ($_SERVER['HTTP_X_WAP_PROFILE']))
         return true;
 
@@ -202,7 +225,8 @@ function ismobile() {
 /**
  * 重写评论显示函数
  */
-function threadedComments($comments, $options){
+function threadedComments($comments, $options)
+{
     $commentClass = '';
     if ($comments->authorId) {
         if ($comments->authorId == $comments->ownerId) {

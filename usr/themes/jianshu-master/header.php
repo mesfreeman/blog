@@ -40,7 +40,7 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
         ), '', ' - '); ?><?php $this->options->title(); ?></title>
     <link rel="shortcut icon" href="<?php $this->options->themeUrl('img/freeman.png'); ?>" type="image/png">
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php $this->options->themeUrl('css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php getCssUrl('css/style.css'); ?>">
 	<?php if($this->options->iconCss):?>
 	<?php $this->options->iconCss();?>
 	<?php endif;?>
