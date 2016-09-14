@@ -66,7 +66,7 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
         <a class="login" href="<?php $this->options->logoutUrl(); ?>"> <i class="fa fa-sign-out"> </i> <?php _e('退出'); ?></a>
         <a class="login" href="<?php $this->options->adminUrl(); ?>"> <i class="fa fa-user"> </i> <?php $this->user->screenName(); ?></a>
     <?php else: ?>
-        <?php if($this->$options->allowRegister): ?>
+        <?php if($this->options->allowRegister): ?>
             <a class="login" href="<?php $this->options->registerUrl(); ?>"><i class="fa fa-user"></i> <?php _e('注册 '); ?></a>
         <?php endif; ?>
 	    <a class="login" href="<?php $this->options->loginUrl(); ?>"> <i class="fa fa-sign-in"> </i> <?php _e('登录'); ?> </a>
