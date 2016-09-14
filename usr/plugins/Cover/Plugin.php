@@ -128,7 +128,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $imgUrl = $imgArray['url'];
 
         // 处理为竖屏图片
-        $imgUrl = str_replace('1920x1080', '1080x1920', $imgUrl);
+//         $imgUrl = str_replace('1920x1080', '1080x1920', $imgUrl);
 
         return $imgUrl;
     }
