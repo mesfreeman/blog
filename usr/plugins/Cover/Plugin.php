@@ -68,9 +68,9 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $currentTime = time();
         if ($currentTime - $time > 12 * 60 * 60) {        // 如果时间超过12个小时,重新抓取
             $imgUrl = self::getImgUrl();                  // 抓取必应背景图
-            $time == 0 ? array_pop($bgPhotoArr) : '';     // 将时间戳出栈
+            $time == 0 ? '' : array_pop($bgPhotoArr);     // 将时间戳出栈
             $bgPhotoStr = implode(',', $bgPhotoArr);      // 重新拼成字符串
-            $bgPhotoStr .= empty($bgPhotoArr) ? '' : ','; // 空值处理，附上前面出现逗号
+            $bgPhotoStr .= empty($bgPhotoArr) ? '' : ','; // 空值处理，避免前面出现逗号
             $bgPhotoStr .= "$imgUrl,{$currentTime}";      // 加入新图片
             $optionArr['bgPhoto'] = $bgPhotoStr;          // 替换原来的value
 
@@ -128,7 +128,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $imgUrl = $imgArray['url'];
 
         // 处理为竖屏图片
-//         $imgUrl = str_replace('1920x1080', '1080x1920', $imgUrl);
+        // $imgUrl = str_replace('1920x1080', '1080x1920', $imgUrl);
 
         return $imgUrl;
     }
