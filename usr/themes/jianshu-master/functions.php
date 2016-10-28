@@ -15,7 +15,7 @@ function themeConfig($form)
     $siteStat = new Typecho_Widget_Helper_Form_Element_Textarea('siteStat', NULL, NULL, _t('统计代码'), _t('在这里填入网站统计代码'));
     $form->addInput($siteStat);
 
-    $bgPhoto = new Typecho_Widget_Helper_Form_Element_Text('bgPhoto', NULL, NULL, _t('网站背景图'), _t('在这里填入背景图网址'));
+    $bgPhoto = new Typecho_Widget_Helper_Form_Element_Textarea('bgPhoto', NULL, NULL, _t('网站背景图'), _t('在这里填入背景图网址'));
     $form->addInput($bgPhoto);
 
 	// 头像地址
