@@ -171,7 +171,7 @@ function getJsUrl($path = null)
     $options = Typecho_Widget::widget('Widget_Options');
 
     if ($path === null) {
-        $path = 'css/style.css';
+        $path = 'js/common.js';
     }
 
     echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
