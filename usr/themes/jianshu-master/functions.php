@@ -148,33 +148,18 @@ function themeCdnUrl($params=null)
 }
 
 /**
- * 重写获取样式地址
+ * 重写获取地址方法
  * @param string $path
  */
-function getCssUrl($path = null)
+function getSelfUrl($path = null)
 {
     $options = Typecho_Widget::widget('Widget_Options');
 
-    if ($path === null) {
-        $path = 'css/style.css';
+    if ($path !== null) {
+        echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
+    } else {
+        echo $options->themeUrl($path);
     }
-
-    echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
-}
-
-/**
- * 重写获取Js地址
- * @param string $path
- */
-function getJsUrl($path = null)
-{
-    $options = Typecho_Widget::widget('Widget_Options');
-
-    if ($path === null) {
-        $path = 'js/common.js';
-    }
-
-    echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
 }
 
 /**
