@@ -37,9 +37,6 @@ $(function(){
 	$(document).bind('click',function(){
 		$('.dropdown-menu.active').removeClass('active');
 	});
-	if(window.isArchive){
-		$(window).bind("scroll", ajaxLoadArchives);
-	}
 	
 	//弹出框
 	$('.btn-dialog').click(function(){
@@ -82,40 +79,7 @@ function backToTopFun() {
         backToTopEle.css("top", st + winh - 166);
     }
 };
-function ajaxLoadArchives(){
-	var st = $(document).scrollTop(), sb = $(document).height() - $(window).height();
-	if(st+160>sb){
-		ajaxLoad.load();
-	}
-}
-var ajaxLoad = {
-		isLoad:false,
-		isEnd:false,
-		load:function(){
-			if(ajaxLoad.isLoad || ajaxLoad.isEnd){
-				return;
-			}
-			ajaxLoad.isLoad = true;
-			ajaxLoad.loadContent();
-		},
-		loadContent:function(){
-			var url = $('#ajax-page').find('a').attr('href');
-			$('#main-container').find('#ajax-page').remove();
-			if(url===undefined || url=='#'){
-				ajaxLoad.setEnd();
-				return false;
-			}
-			$.get(url).success(function(rs){
-				var main = $(rs).html();
-				$(main).appendTo($('#main-container'));
-				ajaxLoad.isLoad = false;
-			});
-		},
-		setEnd:function(){
-			ajaxLoad.isEnd = true;
-			$('<div id="ajax-page" class="page-navigator"><a>没有更多内容了</a></div>').appendTo($('#main-container'));
-		}
-}
+
 function switchReadMode(){
 	var btn = $('.set-view-mode');
 	var next_mode = $('body').hasClass('night-mode') ? 'day' : 'night';

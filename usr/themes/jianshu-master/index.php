@@ -34,9 +34,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 		<?php endif; ?>
     </article>
 <?php endwhile; ?>
-    <div id="ajax-page" class="page-navigator">
-        <?php $this->pageLink('更多','next');?>
-    </div>
+    <?php $this->pageNav('&laquo;', '&raquo;'); ?>
 </div>
 
 <?php if(!$this->request->isAjax()) $this->need('footer.php'); ?>

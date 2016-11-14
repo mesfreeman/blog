@@ -35,9 +35,9 @@
     <?php endif; ?>
 </div>
 <?php $this->footer(); ?>
-<script src="<?php $this->options->themeUrl('js/common.js'); ?>"></script>
+<script src="<?php getJsUrl('js/common.js'); ?>"></script>
 <?php if ($this->is('post')) :?>
-<script src="<?php $this->options->themeUrl('js/highlight.min.js'); ?>"></script>
+<script src="<?php getJsUrl('js/highlight.min.js'); ?>"></script>
 <script>
 $(function(){
 	$(window).load(function(){

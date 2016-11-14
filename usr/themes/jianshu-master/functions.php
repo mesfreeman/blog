@@ -163,6 +163,21 @@ function getCssUrl($path = null)
 }
 
 /**
+ * 重写获取Js地址
+ * @param string $path
+ */
+function getJsUrl($path = null)
+{
+    $options = Typecho_Widget::widget('Widget_Options');
+
+    if ($path === null) {
+        $path = 'css/style.css';
+    }
+
+    echo $options->rootUrl() . '/usr/themes/jianshu-master/' . $path;
+}
+
+/**
  * 生成随机颜色值
  * @return string
  */

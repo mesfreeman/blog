@@ -1152,29 +1152,30 @@ ul.tag-list{
 }
 
 .page-navigator a {
-	display:inline-block;
-	padding:0 20px;
-	height:32px;
-	line-height:32px;
-	background-color:#10A64F;
-	color:#fff;
+    padding: 5px 12px;
+    margin-left: -1px;
+    line-height: 33px;
+    background-color: #10A64F;
+    color: #fff;
 }
 .page-navigator a:hover {
 	background:#0c843f;
 	text-decoration:none;
 }
 .page-navigator li{
-	float:left;
-	list-style:none;
+	display:inline;
 }
 .page-navigator li a{
-	background-color:#F6F6F3;
+	background-color:#FFFCF5;
 	color:#404040;
+    font-size:13px;
+    border:1px solid #e5e5e5;
 }
-.page-navigator li a:hover{
+
+.page-navigator li a:hover {
 	color:#fff;
 }
-.page-navigator li.current a{
+.page-navigator li.current a {
 	background-color:#0c843f;
 	color:#fff;
 }
