@@ -287,9 +287,6 @@ body {
 	margin-left: 25.0%;
 	width: 58.33333%;
 }
-.wrapper .main {
-	padding-left: 12px
-}
 .main-container{
 	padding-left: 36px;
 	margin: 35px 0 0;
@@ -300,7 +297,7 @@ body {
 	}
 	.main {
 		width: 100%;
-		padding: 70px 10px 0;
+		padding: 53px 10px;
 		margin-left: 0 !important;
 	}
 	.main .page-title,.main-container {
@@ -537,7 +534,8 @@ body {
 	}
 	.navbar-menu{
 		background:none;
-		position:relative;
+		position: fixed;
+    	height: 45px;
 	}
 	.navbar-menu a {
 		background-color: #e78170;
