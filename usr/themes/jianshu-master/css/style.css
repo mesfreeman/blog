@@ -537,6 +537,7 @@ body {
 	}
 	.navbar-menu{
 		background:none;
+		position:relative;
 	}
 	.navbar-menu a {
 		background-color: #e78170;
@@ -1525,17 +1526,6 @@ footer a {
 .apache .hljs-sqbracket,
 .tex .hljs-formula {
   color: #CAC5B0;
-}
-
-/* single page*/
-.single .sidebar{
-	display:none;
-}
-.single .main{
-	margin-left: 16.66667%;
-}
-.single footer{
-	margin-left:16.66667%;
 }
 
 /* night-mode*/
