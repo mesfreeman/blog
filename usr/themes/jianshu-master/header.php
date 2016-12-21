@@ -89,7 +89,7 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
 </div>
 <div class="wrapper">
 <div class="sidebar">
-    <div class="cover-img" style="background-image: url(<?php Cover_Plugin::theCover('order'); ?>)"></div>
+    <div class="cover-img" style="background-image: url(<?php Cover_Plugin::theCover(); ?>)"></div>
     <div class="bottom-block">
 	  <?php if($this->options->avatarUrl):?>
 		<img class="avatar" width="72" src="<?php $this->options->avatarUrl();?>" alt="" />
