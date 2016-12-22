@@ -66,7 +66,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         // 处理数据结构有更改的情况
         $time = preg_match('/^\d{10}$/', end($bgPhotoArr)) ? end($bgPhotoArr) : 0;
         $currentTime = time();
-        if ($currentTime - $time > 12 * 60 * 60) { // 如果时间超过12个小时，重新抓取且替换掉原来的图片地址
+        if ($currentTime - $time > 24 * 60 * 60) { // 如果时间超过24个小时，重新抓取且替换掉原来的图片地址，因为必应图片是24小时换一张
             // 获取最新背景图
             $dataArr = json_decode(file_get_contents('http://super.hequanxi.com/tools.php/BingPic/getNewPic'), true);
             $bgPhotoUlr = $dataArr['picUrl'];
