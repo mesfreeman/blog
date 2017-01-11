@@ -68,7 +68,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $currentTime = time();
         if ($currentTime - $time > 24 * 60 * 60) { // 如果时间超过24个小时，重新抓取且替换掉原来的图片地址，因为必应图片是24小时换一张
             // 获取最新背景图
-            $dataArr = json_decode(file_get_contents('http://super.hequanxi.com/tool/BingPic/getNewPic'), true);
+            $dataArr = json_decode(file_get_contents('http://www.hequanxi.com/rpc/tool/BingPic/getNewPic'), true);
             $bgPhotoUlr = $dataArr['picUrl'];
             $optionArr['bgPhoto'] = "{$bgPhotoUlr},{$currentTime}";
 
