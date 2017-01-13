@@ -62,13 +62,12 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $row = $db->fetchRow($db->select('value')->from('table.options')->where('name = ?', 'theme:jianshu-master'));
         $optionArr = unserialize($row['value']);
         $bgPhotoArr = explode(',', $optionArr['bgPhoto']);
-
         // 处理数据结构有更改的情况
         $time = preg_match('/^\d{10}$/', end($bgPhotoArr)) ? end($bgPhotoArr) : 0;
         $currentTime = time();
         if ($currentTime - $time > 24 * 60 * 60) { // 如果时间超过24个小时，重新抓取且替换掉原来的图片地址，因为必应图片是24小时换一张
             // 获取最新背景图
-            $dataArr = json_decode(file_get_contents('http://super.hequanxi.com/tool/BingPic/getNewPic'), true);
+            $dataArr = json_decode(file_get_contents('http://www.hequanxi.com/rpc/tool/BingPic/getNewPic'), true);
             $bgPhotoUlr = $dataArr['picUrl'];
             $optionArr['bgPhoto'] = "{$bgPhotoUlr},{$currentTime}";
 
