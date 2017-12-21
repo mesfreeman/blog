@@ -116,6 +116,7 @@ class Widget_Menu extends Typecho_Widget
             array(_t('外观'), _t('网站外观'), 'themes.php', 'administrator'),
             array(array('Widget_Themes_Files', 'getMenuTitle'), array('Widget_Themes_Files', 'getMenuTitle'), 'theme-editor.php', 'administrator', true),
             array(_t('设置外观'), _t('设置外观'), 'options-theme.php', 'administrator', true),
+            array(_t('备份'), _t('备份'), 'backup.php', 'administrator'),
             array(_t('升级'), _t('升级程序'), 'upgrade.php', 'administrator', true),
             array(_t('欢迎'), _t('欢迎使用'), 'welcome.php', 'subscriber', true)
         ),
@@ -306,7 +307,7 @@ class Widget_Menu extends Typecho_Widget
             }
 
             echo "<ul class=\"root" . ($key == $this->_currentParent ? ' ' . $class : NULL) 
-                . "\"><li class=\"parent\"><a href=\"{$node[2]}\">{$node[0]}</a></dt>"
+                . "\"><li class=\"parent\"><a href=\"{$node[2]}\">{$node[0]}</a>"
                 . "</li><ul class=\"child\">";
 
             $last = 0;

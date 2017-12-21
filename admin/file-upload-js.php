@@ -94,6 +94,9 @@ $(document).ready(function() {
         li.effect('highlight', {color : '#FBC2C4'}, 2000, function () {
             $(this).remove();
         });
+
+        // fix issue #341
+        this.removeFile(file);
     }
 
     var completeFile = null;
@@ -133,9 +136,9 @@ $(document).ready(function() {
 
             init            :   {
                 FilesAdded      :   function (up, files) {
-                    plupload.each(files, function(file) {
-                        fileUploadStart(file);
-                    });
+                    for (var i = 0; i < files.length; i ++) {
+                        fileUploadStart(files[i]);
+                    }
 
                     completeFile = null;
                     uploader.start();
@@ -153,18 +156,19 @@ $(document).ready(function() {
 
                         if (data) {
                             fileUploadComplete(file.id, data[0], data[1]);
+                            uploader.removeFile(file);
                             return;
                         }
                     }
 
-                    fileUploadError({
+                    fileUploadError.call(uploader, {
                         code : plupload.HTTP_ERROR,
                         file : file
                     });
                 },
 
                 Error           :   function (up, error) {
-                    fileUploadError(error);
+                    fileUploadError.call(uploader, error);
                 }
             }
         });

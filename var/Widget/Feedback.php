@@ -38,11 +38,12 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
     private function comment()
     {
         // 使用安全模块保护
+        $this->security->enable($this->options->commentsAntiSpam);
         $this->security->protect();
 
         $comment = array(
             'cid'       =>  $this->_content->cid,
-            'created'   =>  $this->options->gmtTime,
+            'created'   =>  $this->options->time,
             'agent'     =>  $this->request->getAgent(),
             'ip'        =>  $this->request->getIp(),
             'ownerId'   =>  $this->_content->author->uid,
@@ -99,7 +100,7 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
                 }
             }
 
-            $expire = $this->options->gmtTime + $this->options->timezone + 30*24*3600;
+            $expire = $this->options->time + $this->options->timezone + 30*24*3600;
             Typecho_Cookie::set('__typecho_remember_author', $comment['author'], $expire);
             Typecho_Cookie::set('__typecho_remember_mail', $comment['mail'], $expire);
             Typecho_Cookie::set('__typecho_remember_url', $comment['url'], $expire);
@@ -114,7 +115,7 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
         
         /** 评论者之前须有评论通过了审核 */
         if (!$this->options->commentsRequireModeration && $this->options->commentsWhitelist) {
-            if ($commentApprovedNum = $this->size($this->select()->where('author = ? AND mail = ? AND status = ?', $comment['author'], $comment['mail'], 'approved'))) {
+            if ($this->size($this->select()->where('author = ? AND mail = ? AND status = ?', $comment['author'], $comment['mail'], 'approved'))) {
                 $comment['status'] = 'approved';
             } else {
                 $comment['status'] = 'waiting';
@@ -169,7 +170,7 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
 
         $trackback = array(
             'cid'       =>  $this->_content->cid,
-            'created'   =>  $this->options->gmtTime,
+            'created'   =>  $this->options->time,
             'agent'     =>  $this->request->getAgent(),
             'ip'        =>  $this->request->getIp(),
             'ownerId'   =>  $this->_content->author->uid,
@@ -211,7 +212,7 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
         $trackback = $this->pluginHandle()->trackback($trackback, $this->_content);
 
         /** 添加引用 */
-        $trackbackId = $this->insert($trackback);
+        $this->insert($trackback);
 
         /** 评论完成接口 */
         $this->pluginHandle()->finishTrackback($this);
@@ -312,14 +313,15 @@ class Widget_Feedback extends Widget_Abstract_Comments implements Widget_Interfa
 
                 /** 检查ip评论间隔 */
                 if (!$this->user->pass('editor', true) && $this->_content->authorId != $this->user->uid &&
-                $this->options->commentsPostIntervalEnable) {
+                    $this->options->commentsPostIntervalEnable) {
+
                     $latestComment = $this->db->fetchRow($this->db->select('created')->from('table.comments')
-                    ->where('cid = ?', $this->_content->cid)
+                    ->where('cid = ? AND ip = ?', $this->_content->cid, $this->request->getIp())
                     ->order('created', Typecho_Db::SORT_DESC)
                     ->limit(1));
 
-                    if ($latestComment && ($this->options->gmtTime - $latestComment['created'] > 0 &&
-                    $this->options->gmtTime - $latestComment['created'] < $this->options->commentsPostInterval)) {
+                    if ($latestComment && ($this->options->time - $latestComment['created'] > 0 &&
+                    $this->options->time - $latestComment['created'] < $this->options->commentsPostInterval)) {
                         throw new Typecho_Widget_Exception(_t('对不起, 您的发言过于频繁, 请稍侯再次发布.'), 403);
                     }
                 }

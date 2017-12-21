@@ -20,7 +20,7 @@ class Typecho_Cookie
 {
     /**
      * 前缀
-     *
+     * 
      * @var string
      * @access private
      */
@@ -28,15 +28,15 @@ class Typecho_Cookie
 
     /**
      * 路径
-     *
+     * 
      * @var string
      * @access private
      */
     private static $_path = '/';
 
     /**
-     * 设置前缀
-     *
+     * 设置前缀 
+     * 
      * @param string $url
      * @access public
      * @return void
@@ -51,8 +51,8 @@ class Typecho_Cookie
     }
 
     /**
-     * 获取前缀
-     *
+     * 获取前缀 
+     * 
      * @access public
      * @return string
      */
@@ -62,8 +62,8 @@ class Typecho_Cookie
     }
 
     /**
-     * 获取目录
-     *
+     * 获取目录 
+     * 
      * @access public
      * @return string
      */

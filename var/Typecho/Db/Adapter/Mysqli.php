@@ -5,15 +5,15 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @copyright  Copyright (c) 2008 Typecho team (http://www.typecho.org)
  * @license    GNU General Public License 2.0
- * @version    $Id: Mysql.php 103 2008-04-09 16:22:43Z magike.net $
+ * @version    $Id: Mysqli.php 103 2008-04-09 16:22:43Z magike.net $
  */
 
 /**
- * 数据库Mysql适配器
+ * 数据库Mysqli适配器
  *
  * @package Db
  */
-class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
+class Typecho_Db_Adapter_Mysqli implements Typecho_Db_Adapter
 {
     /**
      * 数据库连接字符串标示
@@ -31,7 +31,7 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public static function isAvailable()
     {
-        return function_exists('mysql_connect');
+        return class_exists('MySQLi');
     }
 
     /**
@@ -43,18 +43,16 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function connect(Typecho_Config $config)
     {
-        if ($this->_dbLink = @mysql_connect($config->host . (empty($config->port) ? '' : ':' . $config->port),
-        $config->user, $config->password, true)) {
-            if (@mysql_select_db($config->database, $this->_dbLink)) {
-                if ($config->charset) {
-                    mysql_query("SET NAMES '{$config->charset}'", $this->_dbLink);
-                }
-                return $this->_dbLink;
+
+        if ($this->_dbLink = @new MySQLi($config->host, $config->user, $config->password, $config->database, (empty($config->port) ? '' : $config->port))) {
+            if ($config->charset) {
+                $this->_dbLink->query("SET NAMES '{$config->charset}'");
             }
+            return $this->_dbLink;
         }
 
         /** 数据库异常 */
-        throw new Typecho_Db_Adapter_Exception(@mysql_error($this->_dbLink));
+        throw new Typecho_Db_Adapter_Exception(@$this->_dbLink->error);
     }
 
     /**
@@ -65,7 +63,7 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function getVersion($handle)
     {
-        return 'ext:mysql ' . mysql_get_server_info($handle);
+        return 'ext:mysqli ' . $this->_dbLink->server_version;
     }
 
     /**
@@ -80,12 +78,12 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function query($query, $handle, $op = Typecho_Db::READ, $action = NULL)
     {
-        if ($resource = @mysql_query($query instanceof Typecho_Db_Query ? $query->__toString() : $query, $handle)) {
+        if ($resource = @$this->_dbLink->query($query instanceof Typecho_Db_Query ? $query->__toString() : $query)) {
             return $resource;
         }
 
         /** 数据库异常 */
-        throw new Typecho_Db_Query_Exception(@mysql_error($this->_dbLink), mysql_errno($this->_dbLink));
+        throw new Typecho_Db_Query_Exception($this->_dbLink->error, $this->_dbLink->errno);
     }
 
     /**
@@ -96,7 +94,7 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function fetch($resource)
     {
-        return mysql_fetch_assoc($resource);
+        return $resource->fetch_assoc();
     }
 
     /**
@@ -107,7 +105,7 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function fetchObject($resource)
     {
-        return mysql_fetch_object($resource);
+        return $resource->fetch_object();
     }
 
     /**
@@ -130,7 +128,7 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function quoteColumn($string)
     {
-        return '`' . $string . '`';
+        return $this->_dbLink->real_escape_string($string);
     }
 
     /**
@@ -165,10 +163,10 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function affectedRows($resource, $handle)
     {
-        return mysql_affected_rows($handle);
+        return $this->_dbLink->affected_rows;
     }
 
-    /**
+    /*y
      * 取出最后一次插入返回的主键值
      *
      * @param resource $resource 查询的资源数据
@@ -177,6 +175,6 @@ class Typecho_Db_Adapter_Mysql implements Typecho_Db_Adapter
      */
     public function lastInsertId($resource, $handle)
     {
-        return mysql_insert_id($handle);
+        return $this->_dbLink->insert_id;
     }
 }

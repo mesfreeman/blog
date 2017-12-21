@@ -2,32 +2,6 @@
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
 /**
- * 扩展htmlrender，使得其支持行内换行 
- * 
- * @package Markdown
- * @copyright Copyright (c) 2014 Typecho team (http://www.typecho.org)
- * @license GNU General Public License 2.0
- */
-class HtmlRendererExtra extends CommonMark_HtmlRenderer
-{
-    /**
-     * renderInline  
-     * 
-     * @param CommonMark_Element_InlineElementInterface $inline 
-     * @access public
-     * @return void
-     */
-    public function renderInline(CommonMark_Element_InlineElementInterface $inline)
-    {
-        if ($inline->getType() == CommonMark_Element_InlineElement::TYPE_SOFTBREAK) {
-            $inline->setType(CommonMark_Element_InlineElement::TYPE_HARDBREAK);
-        }
-
-        return parent::renderInline($inline);
-    }
-}
-
-/**
  * Markdown解析
  *
  * @package Markdown
@@ -35,7 +9,7 @@ class HtmlRendererExtra extends CommonMark_HtmlRenderer
  * @license GNU General Public License 2.0
  */
 class Markdown
-{ 
+{
     /**
      * convert 
      * 
@@ -44,19 +18,61 @@ class Markdown
      */
     public static function convert($text)
     {
-        static $docParser, $renderer;
+        static $parser;
 
-        if (empty($docParser)) {
-            $docParser = new CommonMark_DocParser();
+        if (empty($parser)) {
+            $parser = new HyperDown();
+
+            $parser->hook('afterParseCode', function ($html) {
+                return preg_replace("/<code class=\"([_a-z0-9-]+)\">/i", "<code class=\"lang-\\1\">", $html);
+            });
+
+            $parser->hook('beforeParseInline', function ($html) use ($parser) {
+                return preg_replace_callback("/^\s*<!\-\-\s*more\s*\-\->\s*$/s", function ($matches) use ($parser) {
+                    return $parser->makeHolder('<!--more-->');
+                }, $html);
+            });
+
+            $parser->enableHtml(true);
+            $parser->_commonWhiteList .= '|img|cite|embed|iframe';
+            $parser->_specialWhiteList = array_merge($parser->_specialWhiteList, array(
+                'ol'            =>  'ol|li',
+                'ul'            =>  'ul|li',
+                'blockquote'    =>  'blockquote',
+                'pre'           =>  'pre|code'
+            ));
         }
 
+        return str_replace('<p><!--more--></p>', '<!--more-->', $parser->makeHtml($text));
+    }
 
-        if (empty($renderer)) {
-            $renderer = new HtmlRendererExtra();
-        }
+    /**
+     * transerCodeClass
+     * 
+     * @param string $html
+     * @return string
+     */
+    public static function transerCodeClass($html)
+    {
+        return preg_replace("/<code class=\"([_a-z0-9-]+)\">/i", "<code class=\"lang-\\1\">", $html);
+    }
 
-        $doc = $docParser->parse($text);
-        return $renderer->render($doc);
+    /**
+     * @param $html
+     * @return mixed
+     */
+    public static function transerComment($html)
+    {
+        return preg_replace_callback("/<!\-\-(.+?)\-\->/s", array('Markdown', 'transerCommentCallback'), $html);
+    }
+
+    /**
+     * @param $matches
+     * @return string
+     */
+    public static function transerCommentCallback($matches)
+    {
+        return self::$parser->makeHolder($matches[0]);
     }
 }
 

@@ -26,10 +26,20 @@ class Widget_Init extends Typecho_Widget
         /** 对变量赋值 */
         $options = $this->widget('Widget_Options');
 
+        /** 检查安装状态 */
+        if (!$options->installed) {
+            $options->update(array('value' => 1), Typecho_Db::get()->sql()->where('name = ?', 'installed'));
+        }
+
         /** 语言包初始化 */
         if ($options->lang && $options->lang != 'zh_CN') {
             $dir = defined('__TYPECHO_LANG_DIR__') ? __TYPECHO_LANG_DIR__ : __TYPECHO_ROOT_DIR__ . '/usr/langs';
             Typecho_I18n::setLang($dir . '/' . $options->lang . '.mo');
+        }
+
+        /** 备份文件目录初始化 */
+        if (!defined('__TYPECHO_BACKUP_DIR__')) {
+            define('__TYPECHO_BACKUP_DIR__', __TYPECHO_ROOT_DIR__ . '/usr/backups');
         }
 
         /** cookie初始化 */

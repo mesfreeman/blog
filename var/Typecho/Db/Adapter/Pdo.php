@@ -39,7 +39,7 @@ abstract class Typecho_Db_Adapter_Pdo implements Typecho_Db_Adapter
      */
     public static function isAvailable()
     {
-        return extension_loaded('pdo');
+        return class_exists('PDO');
     }
 
     /**
@@ -59,6 +59,18 @@ abstract class Typecho_Db_Adapter_Pdo implements Typecho_Db_Adapter
             /** 数据库异常 */
             throw new Typecho_Db_Adapter_Exception($e->getMessage());
         }
+    }
+
+    /**
+     * 获取数据库版本 
+     * 
+     * @param mixed $handle
+     * @return string
+     */
+    public function getVersion($handle)
+    {
+        return 'pdo:' . $handle->getAttribute(PDO::ATTR_DRIVER_NAME) 
+            . ' ' . $handle->getAttribute(PDO::ATTR_SERVER_VERSION);
     }
 
     /**

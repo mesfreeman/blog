@@ -239,6 +239,7 @@ Typecho_Date::setTimezoneOffset($options->timezone);
                     $db->query('DROP TABLE  ' . $prefix . 'users_' . $uuid, Typecho_Db::WRITE);
                     $db->query('CREATE UNIQUE INDEX ' . $prefix . 'users_name ON ' . $prefix . 'users ("name")', Typecho_Db::WRITE);
                     $db->query('CREATE UNIQUE INDEX ' . $prefix . 'users_mail ON ' . $prefix . 'users ("mail")', Typecho_Db::WRITE);
+                    $db->flushPool();
 
                     break;
 
@@ -322,6 +323,7 @@ Typecho_Date::setTimezoneOffset($options->timezone);
                     $db->query('INSERT INTO ' . $prefix . 'metas SELECT * FROM ' . $prefix . 'metas' . $uuid, Typecho_Db::WRITE);
                     $db->query('DROP TABLE  ' . $prefix . 'metas' . $uuid, Typecho_Db::WRITE);
                     $db->query('CREATE INDEX ' . $prefix . 'metas_slug ON ' . $prefix . 'metas ("slug")', Typecho_Db::WRITE);
+                    $db->flushPool();
 
                     break;
 
@@ -773,6 +775,7 @@ Typecho_Date::setTimezoneOffset($options->timezone);
                 $db->query('DROP TABLE  ' . $prefix . 'contents_tmp', Typecho_Db::WRITE);
                 $db->query('CREATE UNIQUE INDEX ' . $prefix . 'contents_slug ON ' . $prefix . 'contents ("slug")', Typecho_Db::WRITE);
                 $db->query('CREATE INDEX ' . $prefix . 'contents_created ON ' . $prefix . 'contents ("created")', Typecho_Db::WRITE);
+                $db->flushPool();
 
                 break;
 
@@ -1154,7 +1157,7 @@ Typecho_Date::setTimezoneOffset($options->timezone);
                 $db->query('INSERT INTO ' . $prefix . 'metas SELECT * FROM ' . $prefix . 'metas' . $uuid, Typecho_Db::WRITE);
                 $db->query('DROP TABLE  ' . $prefix . 'metas' . $uuid, Typecho_Db::WRITE);
                 $db->query('CREATE INDEX ' . $prefix . 'metas_slug ON ' . $prefix . 'metas ("slug")', Typecho_Db::WRITE);
-
+                $db->flushPool();
                 break;
 
             default:
@@ -1202,6 +1205,54 @@ Typecho_Date::setTimezoneOffset($options->timezone);
     {
         $db->query($db->insert('table.options')
             ->rows(array('name' => 'commentsAntiSpam', 'user' => 0, 'value' => 1)));
+    }
+
+    /**
+     * 升级至17.4.24 
+     * 
+     * @param mixed $db 
+     * @param mixed $options 
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function v1_1r17_4_24($db, $options)
+    {
+        // 增加markdown
+        $db->query($db->insert('table.options')
+            ->rows(array('name' => 'xmlrpcMarkdown', 'user' => 0, 'value' => 0)));
+    }
+
+    /**
+     * 升级至17.10.24
+     *
+     * @param mixed $db
+     * @param mixed $options
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function v1_1r17_10_24($db, $options)
+    {
+        // 增加installed
+        $db->query($db->insert('table.options')
+            ->rows(array('name' => 'installed', 'user' => 0, 'value' => 1)));
+    }
+
+    /**
+     * 升级至17.10.27
+     *
+     * @param mixed $db
+     * @param mixed $options
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function v1_1r17_10_27($db, $options)
+    {
+        // 增加installed
+        $db->query($db->insert('table.options')
+            ->rows(array('name' => 'allowXmlRpc', 'user' => 0, 'value' => 2)));
     }
 }
 

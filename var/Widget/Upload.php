@@ -71,7 +71,7 @@ class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface
         $info = pathinfo($name);
         $name = substr($info['basename'], 1);
     
-        return isset($info['extension']) ? $info['extension'] : '';
+        return isset($info['extension']) ? strtolower($info['extension']) : '';
     }
 
     /**
@@ -98,8 +98,7 @@ class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface
             return false;
         }
 
-        $options = Typecho_Widget::widget('Widget_Options');
-        $date = new Typecho_Date($options->gmtTime);
+        $date = new Typecho_Date();
         $path = Typecho_Common::url(defined('__TYPECHO_UPLOAD_DIR__') ? __TYPECHO_UPLOAD_DIR__ : self::UPLOAD_DIR,
             defined('__TYPECHO_UPLOAD_ROOT_DIR__') ? __TYPECHO_UPLOAD_ROOT_DIR__ : __TYPECHO_ROOT_DIR__) 
             . '/' . $date->year . '/' . $date->month;

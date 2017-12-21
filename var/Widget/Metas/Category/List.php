@@ -21,14 +21,6 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 class Widget_Metas_Category_List extends Widget_Abstract_Metas
 {
     /**
-     * 多级分类回调函数
-     * 
-     * @var boolean
-     * @access private
-     */
-    private $_customTreeViewCategoriesCallback = false;
-
-    /**
      * 树状分类结构 
      * 
      * @var array
@@ -96,11 +88,6 @@ class Widget_Metas_Category_List extends Widget_Abstract_Metas
     {
         parent::__construct($request, $response, $params);
         $this->parameter->setDefault('ignore=0&current=');
-        
-        /** 初始化回调函数 */
-        if (function_exists('treeViewCategories')) {
-            $this->_customTreeViewCategoriesCallback = true;
-        }
 
         $select = $this->select()->where('type = ?', 'category');
         if ($this->parameter->ignore) {
@@ -137,7 +124,7 @@ class Widget_Metas_Category_List extends Widget_Abstract_Metas
     private function treeViewCategoriesCallback()
     {
         $categoryOptions = $this->_categoryOptions;
-        if ($this->_customTreeViewCategoriesCallback) {
+        if (function_exists('treeViewCategories')) {
             return treeViewCategories($this, $categoryOptions);
         }
 
@@ -179,7 +166,7 @@ class Widget_Metas_Category_List extends Widget_Abstract_Metas
             $this->treeViewCategories();
         }
 
-        echo '</li>';
+        echo '</' . $categoryOptions->itemTag . '>';
     }
 
     /**
@@ -336,7 +323,7 @@ class Widget_Metas_Category_List extends Widget_Abstract_Metas
      */
     public function filter(array $value)
     {
-        $value['directory'] = $this->getAllParents($value['mid']);
+        $value['directory'] = $this->getAllParentsSlug($value['mid']);
         $value['directory'][] = $value['slug'];
 
         $tmpCategoryTree = $value['directory'];
@@ -368,6 +355,26 @@ class Widget_Metas_Category_List extends Widget_Abstract_Metas
      * @return array
      */
     public function getAllParents($mid)
+    {
+        $parents = array();
+        
+        if (isset($this->_parents[$mid])) {
+            foreach ($this->_parents[$mid] as $parent) {
+                $parents[] = $this->_map[$parent];
+            }
+        }
+
+        return $parents;
+    }
+
+    /**
+     * 获取某个分类所有父级节点缩略名
+     * 
+     * @param mixed $mid 
+     * @access public
+     * @return array
+     */
+    public function getAllParentsSlug($mid)
     {
         $parents = array();
         

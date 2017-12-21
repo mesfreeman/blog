@@ -190,7 +190,7 @@ class Typecho_Request
     /**
      * 检查ua是否合法
      *
-     * @param $agent ua字符串
+     * @param string $agent ua字符串
      * @return boolean
      */
     private function _checkAgent($agent)
@@ -218,9 +218,12 @@ class Typecho_Request
     public static function getUrlPrefix()
     {
         if (empty(self::$_urlPrefix)) {
-            self::$_urlPrefix = (self::isSecure() ? 'https' : 'http') 
-                . '://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'])
-                . (in_array($_SERVER['SERVER_PORT'], array(80, 443)) ? '' : ':' . $_SERVER['SERVER_PORT']);
+            if (defined('__TYPECHO_URL_PREFIX__')) {
+                self::$_urlPrefix == __TYPECHO_URL_PREFIX__;
+            } else if (!defined('__TYPECHO_CLI__')) {
+                self::$_urlPrefix = (self::isSecure() ? 'https' : 'http') . '://' 
+                    . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
+            }
         }
 
         return self::$_urlPrefix;
@@ -437,13 +440,16 @@ class Typecho_Request
             $requestUri = $_SERVER['UNENCODED_URL'];
         } elseif (isset($_SERVER['REQUEST_URI'])) {
             $requestUri = $_SERVER['REQUEST_URI'];
+            $parts       = @parse_url($requestUri);
+            
             if (isset($_SERVER['HTTP_HOST']) && strstr($requestUri, $_SERVER['HTTP_HOST'])) {
-                $parts       = @parse_url($requestUri);
-
                 if (false !== $parts) {
                     $requestUri  = (empty($parts['path']) ? '' : $parts['path'])
                                  . ((empty($parts['query'])) ? '' : '?' . $parts['query']);
                 }
+            } elseif (!empty($_SERVER['QUERY_STRING']) && empty($parts['query'])) {
+                // fix query missing
+                $requestUri .= '?' . $_SERVER['QUERY_STRING'];
             }
         } elseif (isset($_SERVER['ORIG_PATH_INFO'])) { // IIS 5.0, PHP as CGI
             $requestUri = $_SERVER['ORIG_PATH_INFO'];
@@ -596,7 +602,7 @@ class Typecho_Request
                 if (function_exists('mb_convert_encoding')) {
                     $pathInfo = mb_convert_encoding($pathInfo, $outputEncoding, $inputEncoding);
                 } else if (function_exists('iconv')) {
-                    $pathInfo = iconv($pathInfoEncoding, $outputEncoding, $pathInfo);
+                    $pathInfo = iconv($inputEncoding, $outputEncoding, $pathInfo);
                 }
             }
         } else {
