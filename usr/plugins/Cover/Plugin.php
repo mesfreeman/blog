@@ -75,19 +75,20 @@ class Cover_Plugin implements Typecho_Plugin_Interface
             || $lastUpdateTime !== strtotime(date('Y-m-d H:i:s', $lastUpdateTime))
             || $lastUpdateTime - strtotime(date('Y-m-d 05:00:00')) < 0
         ) {
-            // 获取失败，直接退出
-            if (empty($coverUrl)) {
-                die;
+            // 抓取必应封面图
+            $coverUrl = self::captureBingImg();
+
+            // 抓取成功，将新图片存入数据库
+            if (! empty($coverUrl)) {
+                // 替换原背景图数据
+                $optionArray['bgPhoto'] = "{$coverUrl}," . time();
+
+                // 序列化处理
+                $serializeOption = serialize($optionArray);
+
+                // 更新数据库
+                $db->query($db->update('table.options')->rows(array('value' => $serializeOption))->where('name = ?', 'theme:jianshu-master'));
             }
-
-            // 替换原背景图数据
-            $optionArray['bgPhoto'] = "{$coverUrl}," . time();
-
-            // 序列化处理
-            $serializeOption = serialize($optionArray);
-
-            // 更新数据库
-            $db->query($db->update('table.options')->rows(array('value' => $serializeOption))->where('name = ?', 'theme:jianshu-master'));
         }
     }
 
