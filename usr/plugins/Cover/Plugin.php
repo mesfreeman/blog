@@ -5,7 +5,7 @@
  *
  * @package Cover
  * @author  Double
- * @version 1.0.0
+ * @version 1.0.1
  * @link    http://blog.hequanxi.com
  */
 class Cover_Plugin implements Typecho_Plugin_Interface
@@ -59,22 +59,35 @@ class Cover_Plugin implements Typecho_Plugin_Interface
     public static function upCover()
     {
         $db = Typecho_Db::get();
+
+        // 获取数据库中后台配置选项
         $row = $db->fetchRow($db->select('value')->from('table.options')->where('name = ?', 'theme:jianshu-master'));
-        $optionArr = unserialize($row['value']);
-        $bgPhotoArr = explode(',', $optionArr['bgPhoto']);
-        // 处理数据结构有更改的情况
-        $time = preg_match('/^\d{10}$/', end($bgPhotoArr)) ? end($bgPhotoArr) : 0;
-        $currentTime = time();
-        if ($currentTime - $time > 4 * 60 * 60) { // 如果时间超过24个小时，重新抓取且替换掉原来的图片地址，因为必应图片是24小时换一张
-            // 获取最新背景图
-            $dataArr = json_decode(file_get_contents('http://www.hequanxi.com/rpc/tool/BingPic/getNewPic'), true);
-            $bgPhotoUlr = $dataArr['picUrl'];
-            $optionArr['bgPhoto'] = "{$bgPhotoUlr},{$currentTime}";
+
+        // 将值返序列化为数组
+        $optionArray = unserialize($row['value']);
+        $coverArray = explode(',', $optionArray['bgPhoto']);
+
+        // 取出时间戳标记
+        $lastUpdateTime = (int) end($coverArray);
+
+        // 当取出的最后更新时间为空、不合法且小于当天5点时，则重新获取图片
+        if (empty($lastUpdateTime)
+            || $lastUpdateTime !== strtotime(date('Y-m-d H:i:s', $lastUpdateTime))
+            || $lastUpdateTime - strtotime(date('Y-m-d 05:00:00')) < 0
+        ) {
+            // 获取失败，直接退出
+            if (empty($coverUrl)) {
+                die;
+            }
+
+            // 替换原背景图数据
+            $optionArray['bgPhoto'] = "{$coverUrl}," . time();
 
             // 序列化处理
-            $srzOption = serialize($optionArr);
-            // 存入数据库
-            $db->query($db->update('table.options')->rows(array('value' => $srzOption))->where('name = ?', 'theme:jianshu-master'));
+            $serializeOption = serialize($optionArray);
+
+            // 更新数据库
+            $db->query($db->update('table.options')->rows(array('value' => $serializeOption))->where('name = ?', 'theme:jianshu-master'));
         }
     }
 
@@ -87,14 +100,56 @@ class Cover_Plugin implements Typecho_Plugin_Interface
     public static function theCover()
     {
         $db = Typecho_Db::get();
+
+        // 获取数据库中后台配置选项
         $row = $db->fetchRow($db->select('value')->from('table.options')->where('name = ?', 'theme:jianshu-master'));
-        $optionArr = unserialize($row['value']);
-        $bgPhotoArr = explode(',', $optionArr['bgPhoto']);
-        if (empty($bgPhotoArr) || empty(current($bgPhotoArr))) {
-            // 如果没有设置背景图，返回一个默认图
-            echo 'http://s.cn.bing.net/az/hprichbg/rb/LakeWakapitu_ZH-CN11335950566_1080x1920.jpg';
+
+        // 将值返序列化为数组
+        $optionArray = unserialize($row['value']);
+        $coverArray = explode(',', $optionArray['bgPhoto']);
+
+        // 获取封面图
+        $cover = current($coverArray);
+
+        // 如果不是一个合法的图片地址时，返回一个默认封面
+        if (strpos($cover, 'https://') === false) {
+            echo '/usr/themes/jianshu-master/img/defaultBg.jpg';
+        } else {
+            echo $cover;
+        }
+    }
+
+    /**
+     * 获取必应每日背景图
+     *
+     * @return string
+     */
+    protected static function captureBingImg()
+    {
+        // 获取图片的数量
+        $num = 1;
+
+        // 随机数，13位数字
+        $nc = time() . mt_rand(100, 999);
+
+        // 图片请求接口地址
+        $apiUrl = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n={$num}&nc={$nc}&pid=hp";
+
+        // 获取该返回数据
+        $dataJson = file_get_contents($apiUrl);
+        $dataArray = json_decode($dataJson, true);
+
+        if (empty($dataArray) || ! isset($dataArray['images'][0]['url'])) {
+            return '';
         }
 
-        echo current($bgPhotoArr);
+        // 获取图片地址，如：/az/hprichbg/rb/TulipsEquinox_ZH-CN11213785857_1920x1080.jpg
+        $imgUrl = $dataArray['images'][0]['url'];
+
+        // 将电脑尺寸转换为手机尺寸
+        $imgUrl = 'https://cn.bing.com' . str_replace('1920x1080', '1080x1920', $imgUrl);
+
+        // 返回图片完整地址
+        return $imgUrl;
     }
 }
