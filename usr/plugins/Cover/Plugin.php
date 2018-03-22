@@ -113,7 +113,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $cover = current($coverArray);
 
         // 如果不是一个合法的图片地址时，返回一个默认封面
-        if (strpos($cover, 'https://') === false) {
+        if (strpos($cover, '.jpg') === false) {
             echo '/usr/themes/jianshu-master/img/defaultBg.jpg';
         } else {
             echo $cover;
@@ -150,7 +150,19 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         // 将电脑尺寸转换为手机尺寸
         $imgUrl = 'https://cn.bing.com' . str_replace('1920x1080', '1080x1920', $imgUrl);
 
-        // 返回图片完整地址
-        return $imgUrl;
+        // 读取远程图片字节流
+        $imgData = file_get_contents($imgUrl);
+        if ($imgData === false) {
+            return '';
+        }
+
+        // 把图片存入本地
+        $cover = __TYPECHO_ROOT_DIR__ . '/usr/uploads/coverBing.jpg';
+        if (file_put_contents($cover, $imgData) === false || empty(@filesize($cover))) {
+            return '';
+        }
+
+        // 返回图片本地地址
+        return '/usr/uploads/coverBing.jpg';
     }
 }
