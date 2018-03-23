@@ -116,7 +116,8 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         if (strpos($cover, '.jpg') === false) {
             echo '/usr/themes/jianshu-master/img/defaultBg.jpg';
         } else {
-            echo $cover;
+            // 加入版本号的概念，用来避免图片缓存引起的图片不更新
+            echo $cover . '?v=' . date('Ymd', time());
         }
     }
 
