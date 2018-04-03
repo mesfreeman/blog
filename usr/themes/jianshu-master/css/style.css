@@ -868,6 +868,18 @@ body {
 	border:1px dashed #B1AEAE;
 	border-width:2px 0 0 0;
 }
+.post-content table {
+    width:100%;
+    border-collapse: collapse;
+}
+.post-content table th, .post-content table td {
+    border:1px solid #DDD;
+    padding:5px 8px;
+    word-break:break-all;
+}
+.post-content table th {
+    background:#EEE;
+}
 .post .tags {
 	clear:both;
 }
