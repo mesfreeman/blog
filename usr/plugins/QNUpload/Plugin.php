@@ -1,7 +1,7 @@
 <?php
 /**
- * 七牛云附件上传 
- * 
+ * 七牛云附件上传
+ *
  * @package QNUpload
  * @author rakiy
  * @version 1.3.1
@@ -13,7 +13,7 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
 {
     /**
      * 激活插件方法,如果激活失败,直接抛出异常
-     * 
+     *
      * @access public
      * @return void
      * @throws Typecho_Plugin_Exception
@@ -30,32 +30,32 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
         //文件内容数据
         Typecho_Plugin::factory('Widget_Upload')->attachmentDataHandle = array('QNUpload_Plugin', 'attachmentDataHandle');
     }
-    
+
     /**
      * 禁用插件方法,如果禁用失败,直接抛出异常
-     * 
+     *
      * @static
      * @access public
      * @return void
      * @throws Typecho_Plugin_Exception
      */
     public static function deactivate(){}
-    
+
     /**
      * 获取插件配置面板
-     * 
+     *
      * @access public
      * @param Typecho_Widget_Helper_Form $form 配置面板
      * @return void
      */
     public static function config(Typecho_Widget_Helper_Form $form){
-        $ak = new Typecho_Widget_Helper_Form_Element_Text('ak', 
+        $ak = new Typecho_Widget_Helper_Form_Element_Text('ak',
         NULL, '',
         _t('Access Key'),
         _t('<a href="https://portal.qiniu.com/setting/key" target="_blank">获取Access Key</a>'));
         $form->addInput($ak);
 
-        $sk = new Typecho_Widget_Helper_Form_Element_Text('sk', 
+        $sk = new Typecho_Widget_Helper_Form_Element_Text('sk',
         NULL, '',
         _t('Secure Key'),
         _t('<a href="https://portal.qiniu.com/setting/key" target="_blank">获取Secure Key</a>'));
@@ -67,9 +67,9 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
         _t(''));
         $form->addInput($bucketName);
 
-        $server = new Typecho_Widget_Helper_Form_Element_Radio('server', 
-            array('0'=>_t('华东'), '1'=>_t('华北'), '2'=>_t('华南'), '3'=>_t('北美')), 
-            '0', 
+        $server = new Typecho_Widget_Helper_Form_Element_Radio('server',
+            array('0'=>_t('华东'), '1'=>_t('华北'), '2'=>_t('华南'), '3'=>_t('北美')),
+            '0',
             _t('选择bucket节点'),
             _t('一般在七牛面板右下角显示')
         );
@@ -81,16 +81,16 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
         _t('一般在七牛存储面板右上角，形如 xxx.bkt.clouddn.com/xxx.u.qiniu.com'));
         $form->addInput($domain);
     }
-    
+
     /**
      * 个人用户的配置面板
-     * 
+     *
      * @access public
      * @param Typecho_Widget_Helper_Form $form
      * @return void
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form){}
-    
+
     /**
      * 上传文件处理函数
      *
@@ -126,7 +126,8 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
             'mime' => @Typecho_Common::mimeContentType(rtrim($options->domain,'/') . '/' . $filePath . $fileName),
         );
     }
-     /**
+
+    /**
      * 文件修改处理函数
      *
      * @access public
@@ -165,7 +166,8 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
             'mime' => @Typecho_Common::mimeContentType(rtrim($options->domain,'/') . '/' . $fileName),
         );
     }
-     /**
+
+    /**
      * 文件删除
      *
      * @access public
@@ -179,6 +181,7 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
         $err = Qiniu_RS_Delete($client, $options->bucket, $content['attachment']->path);
         return !$err;
     }
+
     /**
      * 获取实际文件数据
      *
@@ -224,9 +227,9 @@ class QNUpload_Plugin implements Typecho_Plugin_Interface
     }
 
     /**
-     * 获取安全的文件名 
-     * 
-     * @param string $name 
+     * 获取安全的文件名
+     *
+     * @param string $name
      * @static
      * @access private
      * @return string
