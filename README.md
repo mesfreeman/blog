@@ -41,3 +41,9 @@
 2. 删除不用的MyPlayer插件
 3. 增加Git仓库忽略文件
 4. 优化封面插件，插件自动抓取必应背景图，不依赖于外部接口
+
+2018-06-04
+-------------------------------------------
+1. 修复百度分享不支持HTTPS的问题，参考：(github)[https://github.com/hrwhisper/baiduShare]
+2. 修复评论区Gravatar头像被墙的问题，在后台配置头像地址为：https://cdn.v2ex.com/gravatar
+3. 升级博客为HTTPS
