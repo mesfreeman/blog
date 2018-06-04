@@ -39,16 +39,16 @@ $font_mode = Typecho_Cookie::get('font-mode', '');
             'author'    =>  _t('%s 发布的文章')
         ), '', ' - '); ?><?php $this->options->title(); ?></title>
     <link rel="shortcut icon" href="<?php $this->options->themeUrl('img/touxiang.jpg'); ?>" type="image/jpg">
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php getSelfUrl('css/style.css'); ?>">
 	<?php if($this->options->iconCss):?>
 	<?php $this->options->iconCss();?>
 	<?php endif;?>
     <!--[if lt IE 9]>
-    <script src="http://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="http://cdn.staticfile.org/respond.js/1.3.0/respond.min.js"></script>
+    <script src="//cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="//cdn.staticfile.org/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- 通过自有函数输出HTML头部信息 -->
     <?php $this->header(); ?>
     <script>
