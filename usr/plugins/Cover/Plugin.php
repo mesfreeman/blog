@@ -138,7 +138,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $apiUrl = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n={$num}&nc={$nc}&pid=hp";
 
         // 获取该返回数据
-        $dataJson = file_get_contents($apiUrl);
+        $dataJson = @file_get_contents($apiUrl);
         $dataArray = json_decode($dataJson, true);
 
         if (empty($dataArray) || ! isset($dataArray['images'][0]['url'])) {
@@ -152,7 +152,7 @@ class Cover_Plugin implements Typecho_Plugin_Interface
         $imgUrl = 'https://cn.bing.com' . str_replace('1920x1080', '1080x1920', $imgUrl);
 
         // 读取远程图片字节流
-        $imgData = file_get_contents($imgUrl);
+        $imgData = @file_get_contents($imgUrl);
         if ($imgData === false) {
             return '';
         }
