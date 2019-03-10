@@ -8,7 +8,7 @@
 
 2018-06-04
 -------------------------------------------
-1. 修复百度分享不支持HTTPS的问题，参考：(github)[https://github.com/hrwhisper/baiduShare]
+1. 修复百度分享不支持HTTPS的问题，参考：https://github.com/hrwhisper/baiduShare
 2. 修复评论区Gravatar头像被墙的问题，在后台配置头像地址为：https://cdn.v2ex.com/gravatar
 3. 升级博客为HTTPS
 
